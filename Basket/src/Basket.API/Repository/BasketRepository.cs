@@ -21,8 +21,9 @@ namespace Basket.API.Repository
         public async Task<ShoppingCart> GetBasket(string username)
         {
             var basketString = await redisCache.GetStringAsync(username);
-            var basket = JsonSerializer.Deserialize<ShoppingCart>(basketString); 
-            return basket;
+            if(!string.IsNullOrEmpty(basketString))
+                return JsonSerializer.Deserialize<ShoppingCart>(basketString);
+            return null;
         }
 
         public async Task<ShoppingCart> UpdateBasket(ShoppingCart basket)

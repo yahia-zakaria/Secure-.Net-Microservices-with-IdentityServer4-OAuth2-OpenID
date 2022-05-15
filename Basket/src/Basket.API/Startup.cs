@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Basket.API.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,7 @@ namespace Basket.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket.API", Version = "v1" });
             });
             services.AddStackExchangeRedisCache(opt=>opt.Configuration=Configuration.GetValue<string>("CachingSettings:ConnectionString"));
+            services.AddScoped<IBasketRepository, BasketRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
