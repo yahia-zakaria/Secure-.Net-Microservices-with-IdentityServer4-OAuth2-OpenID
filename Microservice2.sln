@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.2.32516.85
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{88C93D6C-D977-4BF0-8D24-59108CE3E7F8}"
 EndProject
@@ -24,6 +24,16 @@ EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FD9536DA-82F5-4414-918E-9AB832E0085E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.Grpc", "Discount\src\Discount.Grpc\Discount.Grpc.csproj", "{7C4F4797-A561-4239-8A8C-0B3518FB8AD7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ordering", "Ordering", "{470B1BDD-3494-4D1E-8B00-9C7A0C2D421F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.API", "Ordering\Ordering.API\Ordering.API.csproj", "{129866F9-EF67-48CC-8B91-05E7534DFF5D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Domain", "Ordering\Ordering.Domain\Ordering.Domain.csproj", "{555424F3-945A-486F-8DC3-646870E2AA47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Application", "Ordering\Ordering.Application\Ordering.Application.csproj", "{C1C41F7E-987C-4EA8-BB77-6133E5EAB31D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Infrastructure", "Ordering\Ordering.Infrastructure\Ordering.Infrastructure.csproj", "{2D0177F4-364D-4699-9B62-E2D67176AC88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +61,22 @@ Global
 		{7C4F4797-A561-4239-8A8C-0B3518FB8AD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C4F4797-A561-4239-8A8C-0B3518FB8AD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C4F4797-A561-4239-8A8C-0B3518FB8AD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{129866F9-EF67-48CC-8B91-05E7534DFF5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{129866F9-EF67-48CC-8B91-05E7534DFF5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{129866F9-EF67-48CC-8B91-05E7534DFF5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{129866F9-EF67-48CC-8B91-05E7534DFF5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{555424F3-945A-486F-8DC3-646870E2AA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{555424F3-945A-486F-8DC3-646870E2AA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{555424F3-945A-486F-8DC3-646870E2AA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{555424F3-945A-486F-8DC3-646870E2AA47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1C41F7E-987C-4EA8-BB77-6133E5EAB31D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1C41F7E-987C-4EA8-BB77-6133E5EAB31D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1C41F7E-987C-4EA8-BB77-6133E5EAB31D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1C41F7E-987C-4EA8-BB77-6133E5EAB31D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D0177F4-364D-4699-9B62-E2D67176AC88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D0177F4-364D-4699-9B62-E2D67176AC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D0177F4-364D-4699-9B62-E2D67176AC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D0177F4-364D-4699-9B62-E2D67176AC88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +89,10 @@ Global
 		{C7A735B7-F893-435A-9C74-8F0DA8BA3669} = {563366AC-B7F0-4881-B235-29F1C1D96ADB}
 		{B9F2047D-5E00-4529-9151-3C3F599E8A13} = {C7A735B7-F893-435A-9C74-8F0DA8BA3669}
 		{7C4F4797-A561-4239-8A8C-0B3518FB8AD7} = {C7A735B7-F893-435A-9C74-8F0DA8BA3669}
+		{129866F9-EF67-48CC-8B91-05E7534DFF5D} = {470B1BDD-3494-4D1E-8B00-9C7A0C2D421F}
+		{555424F3-945A-486F-8DC3-646870E2AA47} = {470B1BDD-3494-4D1E-8B00-9C7A0C2D421F}
+		{C1C41F7E-987C-4EA8-BB77-6133E5EAB31D} = {470B1BDD-3494-4D1E-8B00-9C7A0C2D421F}
+		{2D0177F4-364D-4699-9B62-E2D67176AC88} = {470B1BDD-3494-4D1E-8B00-9C7A0C2D421F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C00B32F-968B-446C-A4C1-7D05111F2A47}
