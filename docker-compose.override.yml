@@ -28,6 +28,16 @@ services:
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+
+  orderdb:
+    container_name: orderdb
+    environment:
+        SA_PASSWORD: "36rr45ey"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+        - "1433:1433"
+  
   
   pgadmin:
     container_name: pgadmin
@@ -57,7 +67,14 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
 
-  catalogapi:
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+
+  catalog.api:
     container_name: catalog.api
     ports:
       - "8001:80"
@@ -72,11 +89,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "CachingSettings:ConnectionString=basketdb:6379"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq"
       - "GrpcSettings:DiscountUrl=http://discount.grpc"
     ports:
       - "8002:80"
     depends_on:
       - basketdb
+      - rabbitmq
 
   discount.api:
     container_name: discount.api
@@ -98,3 +117,45 @@ services:
       - "8004:80"
     depends_on:
       - discountdb
+
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:OrderingConnectionString=Server=orderdb,1433;Database=orderdb;User Id=sa;Password=36rr45ey"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq"
+    ports:
+      - "8005:80"
+    depends_on:
+      - orderdb
+      - rabbitmq
+
+
+  ocelotapigw:
+    container_name: ocelotapigw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8000:80"
+
+
+  shopping.aggregator:
+    container_name: shopping.aggregator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:CatalogUrl=http://catalog.api"
+      - "ApiSettings:BasketUrl=http://basket.api"
+      - "ApiSettings:OrderingUrl=http://ordering.api"
+    depends_on:
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8010:80"
+

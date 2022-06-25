@@ -17,9 +17,9 @@ namespace Ordering.Application.Features.Orders.Commands.UpdateOrder
     {
         readonly IMapper mapper;
         readonly IUnitOfWork unitOfWork;
-        readonly Logger<UpdateOrderHandler> logger;
+        readonly ILogger<UpdateOrderHandler> logger;
 
-        public UpdateOrderHandler(IMapper mapper, IUnitOfWork unitOfWork, Logger<UpdateOrderHandler> logger)
+        public UpdateOrderHandler(IMapper mapper, IUnitOfWork unitOfWork, ILogger<UpdateOrderHandler> logger)
         {
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));

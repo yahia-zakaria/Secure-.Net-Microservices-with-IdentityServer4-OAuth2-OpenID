@@ -1,8 +1,11 @@
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using Basket.API.Entities;
 using Basket.API.GrpcServices;
 using Basket.API.Repository;
+using EventBus.Messages.Events;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using static Discount.Grpc.Protos.DiscountProtoService;
 
@@ -12,10 +15,14 @@ namespace Basket.API.Controllers
     {
         private readonly IBasketRepository basketRepo;
         private readonly DiscountService discountService;
-        public BasketController(IBasketRepository basketRepo, DiscountService discountService)
+        private readonly IMapper mapper;
+        private readonly IPublishEndpoint publishEndpoin;
+        public BasketController(IBasketRepository basketRepo, DiscountService discountService, IMapper mapper, IPublishEndpoint publishEndpoint)
         {
             this.basketRepo = basketRepo;
             this.discountService = discountService;
+            this.mapper = mapper;
+            this.publishEndpoin = publishEndpoint;
         }
 
         [HttpGet("{username}"), ProducesResponseType(typeof(ShoppingCart), (int)HttpStatusCode.OK)]
@@ -34,6 +41,27 @@ namespace Basket.API.Controllers
                 item.Price -= coupon.Amount;
             }
             return Ok(await basketRepo.UpdateBasket(basket));
+
+        }
+
+        [HttpPost("Checkout")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
+        {
+            var basket = await basketRepo.GetBasket(basketCheckout.UserName);
+            if(basket is null)
+            {
+                return BadRequest();
+            }
+
+            var basketCheckoutEvent = mapper.Map<BasketCheckoutEvent>(basketCheckout);
+            basketCheckoutEvent.TotalPrice = basket.TotalPrice;
+            await publishEndpoin.Publish(basketCheckoutEvent);
+
+            await basketRepo.DeleteBasket(basketCheckout.UserName);
+
+            return Accepted();
 
         }
 

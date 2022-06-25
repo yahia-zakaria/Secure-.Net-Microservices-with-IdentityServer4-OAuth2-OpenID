@@ -16,9 +16,9 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder
     {
         readonly IUnitOfWork unitOfWork;
         readonly IMapper mapper;
-        readonly Logger<DeleteOrderHandler> logger;
+        readonly ILogger<DeleteOrderHandler> logger;
 
-        public DeleteOrderHandler(IUnitOfWork unitOfWork, IMapper mapper, Logger<DeleteOrderHandler> logger)
+        public DeleteOrderHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<DeleteOrderHandler> logger)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
