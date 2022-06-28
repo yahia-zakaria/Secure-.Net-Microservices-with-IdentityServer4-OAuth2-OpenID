@@ -159,3 +159,21 @@ services:
     ports:
       - "8010:80"
 
+
+  aspnetrunbasics:
+    container_name: webapp
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+    depends_on:
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+      - ocelotapigw
+      - shopping.aggregator
+    ports:
+      - "8011:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
