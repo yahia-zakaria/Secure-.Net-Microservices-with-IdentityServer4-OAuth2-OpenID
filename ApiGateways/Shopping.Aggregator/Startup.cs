@@ -1,3 +1,4 @@
+using Common.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,14 +29,19 @@ namespace Shopping.Aggregator
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping.Aggregator", Version = "v1" });
             });
 
+            services.AddTransient<LoggingDelegatingHandler>();
+
             services.AddHttpClient<ICatalogService, CatalogService>(c =>
-            c.BaseAddress = new Uri(Configuration["ApiSettings:CatalogUrl"]));
+            c.BaseAddress = new Uri(Configuration["ApiSettings:CatalogUrl"]))
+                .AddHttpMessageHandler<LoggingDelegatingHandler>();
 
             services.AddHttpClient<IBasketService, BasketService>(c =>
-            c.BaseAddress = new Uri(Configuration["ApiSettings:BasketUrl"]));
+            c.BaseAddress = new Uri(Configuration["ApiSettings:BasketUrl"]))
+                .AddHttpMessageHandler<LoggingDelegatingHandler>();
 
             services.AddHttpClient<IOrderService, OrderService>(c =>
-            c.BaseAddress = new Uri(Configuration["ApiSettings:OrderingUrl"]));
+            c.BaseAddress = new Uri(Configuration["ApiSettings:OrderingUrl"]))
+                .AddHttpMessageHandler<LoggingDelegatingHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

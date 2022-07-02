@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["Catalog/src/Catalog.API/Catalog.API.csproj", "Catalog/src/Catalog.API/"]
+COPY ["BuildingBlocks/Common.Logging/Common.Logging.csproj", "BuildingBlocks/Common.Logging/"]
 RUN dotnet restore "Catalog/src/Catalog.API/Catalog.API.csproj"
 COPY . .
 WORKDIR "/src/Catalog/src/Catalog.API"
