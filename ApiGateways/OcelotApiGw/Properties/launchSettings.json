@@ -19,7 +19,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Developement"
+        "ASPNETCORE_ENVIRONMENT": "Local"
       },
       "applicationUrl": "http://localhost:5010",
       "dotnetRunMessages": "true"
@@ -27,7 +27,10 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "launchUrl": "http://ocelotapigw",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
       "publishAllPorts": true
     }
   }

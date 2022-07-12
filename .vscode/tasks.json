@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Catalog/src/Catalog.API/Catalog.API.csproj",
+                "${workspaceFolder}/ApiGateways/OcelotApiGw/OcelotApiGw.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Catalog/src/Catalog.API/Catalog.API.csproj",
+                "${workspaceFolder}/ApiGateways/OcelotApiGw/OcelotApiGw.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Catalog/src/Catalog.API/Catalog.API.csproj"
+                "${workspaceFolder}/ApiGateways/OcelotApiGw/OcelotApiGw.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -46,12 +46,12 @@
             "dockerBuild": {
                 "tag": "microservice2:dev",
                 "target": "base",
-                "dockerfile": "${workspaceFolder}/Catalog/src/Catalog.API/Dockerfile",
+                "dockerfile": "${workspaceFolder}/ApiGateways/OcelotApiGw/Dockerfile",
                 "context": "${workspaceFolder}",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/Catalog/src/Catalog.API/Catalog.API.csproj"
+                "appProject": "${workspaceFolder}/ApiGateways/OcelotApiGw/OcelotApiGw.csproj"
             }
         },
         {
@@ -62,12 +62,12 @@
             ],
             "dockerBuild": {
                 "tag": "microservice2:latest",
-                "dockerfile": "${workspaceFolder}/Catalog/src/Catalog.API/Dockerfile",
+                "dockerfile": "${workspaceFolder}/ApiGateways/OcelotApiGw/Dockerfile",
                 "context": "${workspaceFolder}",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/Catalog/src/Catalog.API/Catalog.API.csproj"
+                "appProject": "${workspaceFolder}/ApiGateways/OcelotApiGw/OcelotApiGw.csproj"
             }
         },
         {
@@ -78,7 +78,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/Catalog/src/Catalog.API/Catalog.API.csproj",
+                "appProject": "${workspaceFolder}/ApiGateways/OcelotApiGw/OcelotApiGw.csproj",
                 "enableDebugging": true
             }
         },
@@ -90,7 +90,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/Catalog/src/Catalog.API/Catalog.API.csproj"
+                "appProject": "${workspaceFolder}/ApiGateways/OcelotApiGw/OcelotApiGw.csproj"
             }
         }
     ]
