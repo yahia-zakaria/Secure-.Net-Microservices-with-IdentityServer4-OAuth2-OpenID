@@ -11,6 +11,9 @@ using Polly;
 using System.Net.Http;
 using Polly.Extensions.Http;
 using Serilog;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Shopping.Aggregator
 {
@@ -52,6 +55,12 @@ namespace Shopping.Aggregator
                 .AddHttpMessageHandler<LoggingDelegatingHandler>()
                 .AddPolicyHandler(GetRetryPolicy())
                 .AddPolicyHandler(GetCircuitBreakerPolicy());
+
+
+            services.AddHealthChecks()
+                .AddUrlGroup(new Uri(Configuration["ApiSettings:CatalogUrl"] + "/swagger/index.html"), "Catalog.API", HealthStatus.Unhealthy)
+                .AddUrlGroup(new Uri(Configuration["ApiSettings:BasketUrl"] + "/swagger/index.html"), "Basket.API", HealthStatus.Unhealthy)
+                .AddUrlGroup(new Uri(Configuration["ApiSettings:OrderingUrl"] + "/swagger/index.html"), "Ordering.API", HealthStatus.Unhealthy);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +80,11 @@ namespace Shopping.Aggregator
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             });
         }
 

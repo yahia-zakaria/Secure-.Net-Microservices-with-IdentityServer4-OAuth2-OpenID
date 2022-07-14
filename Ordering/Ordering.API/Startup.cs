@@ -1,21 +1,17 @@
 using EventBus.Messages.Common;
+using HealthChecks.UI.Client;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Ordering.API.EventBusConsumers;
 using Ordering.Application;
 using Ordering.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Ordering.API
 {
@@ -54,6 +50,11 @@ namespace Ordering.API
             });
             services.AddScoped<BasketCheckoutConsumer>();
             services.AddAutoMapper(typeof(Startup));
+
+            var s = Configuration["EventBusSettings:HostAddress"];
+            services.AddHealthChecks()
+                    .AddRabbitMQ(Configuration["EventBusSettings:HostAddress"], null, "RabbitMQ Health", HealthStatus.Unhealthy)
+                    .AddSqlServer(Configuration["ConnectionStrings:OrderingConnectionString"], "Select 1", "SQL Server Health", HealthStatus.Unhealthy);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +74,11 @@ namespace Ordering.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             });
         }
     }

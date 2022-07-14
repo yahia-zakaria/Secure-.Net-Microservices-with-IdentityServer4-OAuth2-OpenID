@@ -39,7 +39,7 @@ namespace Discount.Grpc
 
 
             services.AddHealthChecks()
-                    .AddNpgSql(configuration["DatabaseSettings:ConnectionString"], name:"Redis Health", failureStatus:HealthStatus.Unhealthy);
+                    .AddNpgSql(configuration["DatabaseSettings:ConnectionString"], name:"Postgres Health", failureStatus:HealthStatus.Unhealthy);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
